@@ -1,40 +1,17 @@
-import { ref, SetupContext, reactive } from "vue";
-import {
-  useState,
-  useWatch,
-  useOnMounted,
-  useOnUpdated,
-  useOnUnmounted,
-  useComputed,
-  useWatchEffect,
-} from "./compositionApiImplForHooks";
-import { defineFunctionComponent } from "./defineFunctionComponent";
+# vue3 defineFunctionComponent
 
-export const App = defineFunctionComponent(() => {
-  const time = ref(Date());
+## Features
 
-  setInterval(() => {
-    time.value = Date();
-  });
+## usecase
 
-  return {
-    render() {
-      return (
-        <>
-          <h1>一、时间: defineFunctionComponent 函数工厂组件</h1>
-          <h2>
-            <Clock time={time.value}></Clock>
-          </h2>
-          <h1>二、计数器：纯函数组件 with composition api 的 Hooks 实现</h1>
-          <h2>
-            <Counter time={time.value}></Counter>
-          </h2>
-        </>
-      );
-    },
-  };
-});
+- defineFunctionComponent
+- pure function component with composition-api implement for hooks
+  - useState
+  - useComputed
+  - useWatch, useWatchEffect
+  - useOnUpdated, useOnMounted, useOnUnmounted
 
+```tsx
 const Clock = defineFunctionComponent((props: { time: string }) => {
   return {
     render() {
@@ -96,3 +73,4 @@ const Counter = (props: { time: string }, ctx: SetupContext) => {
     </div>
   );
 };
+```
