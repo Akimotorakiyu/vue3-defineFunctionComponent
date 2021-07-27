@@ -2,14 +2,14 @@
 
 ## Features
 
-## usecase
-
 - defineFunctionComponent
 - pure function component with hooks version composition-api implement
   - useState
   - useComputed
   - useWatch, useWatchEffect
   - useOnUpdated, useOnMounted, useOnUnmounted
+
+## usecase
 
 ```tsx
 const Clock = defineFunctionComponent((props: { time: string }) => {
