@@ -5,7 +5,7 @@
 ## usecase
 
 - defineFunctionComponent
-- pure function component with composition-api implement for hooks
+- pure function component with hooks version composition-api implement
   - useState
   - useComputed
   - useWatch, useWatchEffect
