@@ -15,6 +15,7 @@ import {
   nextTick,
   onDeactivated,
   queuePostFlushCb,
+  onBeforeUpdate,
 } from "vue";
 type MultiWatchSources = (WatchSource<unknown> | object)[];
 type MapSources<T, Immediate> = {
@@ -44,21 +45,18 @@ export const useState = <T>(state: T): T => {
     if (!hookState) {
       hookState = {
         states: [state],
-        currentIndex: 0,
+        currentIndex: -1,
         initial: true,
       };
       Reflect.set(instance, hookSymbol, hookState);
+      onBeforeUpdate(() => {
+        hookState.currentIndex = -1;
+      }, instance);
     } else {
-      hookState.currentIndex++;
       hookState.states.push(state);
     }
-  } else {
-    hookState.currentIndex++;
-    if (hookState.states.length === hookState.currentIndex) {
-      hookState.currentIndex = 0;
-    }
   }
-
+  hookState.currentIndex++;
   return hookState.states[hookState.currentIndex] as T;
 };
 export interface UseWatch {
@@ -121,6 +119,13 @@ export const useOnMounted = <T>(fn: () => void) => {
   const instance = getCurrentInstance();
   if (!instance.isMounted) {
     queuePostFlushCb(fn);
+  }
+};
+
+export const useOnBeforeUpdate = <T>(fn: () => void) => {
+  const instance = getCurrentInstance();
+  if (!instance.isMounted) {
+    onBeforeUpdate(fn, instance);
   }
 };
 
