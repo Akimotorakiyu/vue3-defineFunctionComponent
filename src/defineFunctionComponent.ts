@@ -49,7 +49,16 @@ export const defineFunctionComponent = <
         updateProps();
       });
 
-      return component(props as P, ctx);
+      const protectedProps = new Proxy(props, {
+        set() {
+          console.warn(
+            "You should not change the property of the props directly!"
+          );
+          return false;
+        },
+      });
+
+      return component(protectedProps as P, ctx);
     },
     render(ctx: { render: () => VNode }) {
       return ctx.render();
