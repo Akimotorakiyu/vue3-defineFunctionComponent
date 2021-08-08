@@ -51,8 +51,24 @@ export const defineFunctionComponent = <
 
       const protectedProps = new Proxy(props, {
         set() {
-          console.warn(
-            "You should not change the property of the props directly!"
+          console.error("set: You should not change the props directly!");
+          return false;
+        },
+        deleteProperty() {
+          console.error(
+            "deleteProperty: You should not change the props directly!"
+          );
+          return false;
+        },
+        defineProperty() {
+          console.error(
+            "defineProperty: You should not change the props directly!"
+          );
+          return false;
+        },
+        setPrototypeOf() {
+          console.error(
+            "setPrototypeOf: You should not change the props directly!"
           );
           return false;
         },
