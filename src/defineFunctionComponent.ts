@@ -6,6 +6,19 @@ import {
   onBeforeUpdate,
   shallowReactive,
 } from "vue";
+
+const shallowReadonlyProxyHandlerFunction = () => {
+  console.error("You should not change the props directly!");
+  return false;
+};
+
+const shallowReadonlyProxyHandler: ProxyHandler<any> = {
+  set: shallowReadonlyProxyHandlerFunction,
+  deleteProperty: shallowReadonlyProxyHandlerFunction,
+  defineProperty: shallowReadonlyProxyHandlerFunction,
+  setPrototypeOf: shallowReadonlyProxyHandlerFunction,
+};
+
 /**
  * defineFunctionComponent
  * @author 臭哥哥·湫曗
@@ -49,30 +62,7 @@ export const defineFunctionComponent = <
         updateProps();
       });
 
-      const protectedProps = new Proxy(props, {
-        set() {
-          console.error("set: You should not change the props directly!");
-          return false;
-        },
-        deleteProperty() {
-          console.error(
-            "deleteProperty: You should not change the props directly!"
-          );
-          return false;
-        },
-        defineProperty() {
-          console.error(
-            "defineProperty: You should not change the props directly!"
-          );
-          return false;
-        },
-        setPrototypeOf() {
-          console.error(
-            "setPrototypeOf: You should not change the props directly!"
-          );
-          return false;
-        },
-      });
+      const protectedProps = new Proxy(props, shallowReadonlyProxyHandler);
 
       return component(protectedProps as P, ctx);
     },
