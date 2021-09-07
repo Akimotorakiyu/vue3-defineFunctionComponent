@@ -1,3 +1,4 @@
+import "virtual:windi.css";
 import { createApp, ref } from "vue";
 
 import { App } from "./App";

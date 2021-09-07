@@ -10,7 +10,6 @@ import {
 } from "./compositionApiImplForHooks";
 import { defineFunctionComponent } from "./defineFunctionComponent";
 import Counter from "./Test.vue";
-
 export const App = defineFunctionComponent(() => {
   const time = ref(Date());
 
