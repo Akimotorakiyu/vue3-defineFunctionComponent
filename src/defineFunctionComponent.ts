@@ -39,7 +39,7 @@ export const defineFunctionComponent = <
     name: comName,
     inheritAttrs: option?.inheritAttrs ?? true,
     setup(_, ctx) {
-      const props = shallowReactive({});
+      const props = shallowReactive<Record<string, unknown>>({});
 
       const updateProps = () => {
         const keys = Object.keys(ctx.attrs);
